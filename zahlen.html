@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,44 +13,54 @@
             padding: 20px;
             background-color: #f5f5f5;
         }
+
         .container {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             color: #333;
             text-align: center;
             margin-bottom: 30px;
         }
+
         .input-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
         }
-        input[type="number"], input[type="text"] {
+
+        input[type="number"],
+        input[type="text"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
         }
+
         .slider-container {
             display: flex;
             align-items: center;
             gap: 15px;
         }
+
         input[type="range"] {
             flex-grow: 1;
         }
+
         .basis-value {
             width: 60px;
             font-weight: bold;
         }
+
         .result {
             margin-top: 30px;
             padding: 15px;
@@ -57,6 +68,7 @@
             border-radius: 5px;
             border-left: 4px solid #3498db;
         }
+
         .explanation {
             margin-top: 30px;
             background-color: #f9f9f9;
@@ -64,67 +76,79 @@
             border-radius: 5px;
             border-left: 4px solid #2ecc71;
         }
+
         .error {
             color: #e74c3c;
             font-weight: bold;
             margin-top: 5px;
         }
+
         .calculation-steps {
             margin-top: 20px;
             font-size: 14px;
             color: #555;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 10px 0;
         }
-        th, td {
+
+        th,
+        td {
             padding: 8px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #f2f2f2;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Zahlensystem-Konverter</h1>
-        
+
         <div class="input-group">
             <label for="decimal-input">Dezimalzahl (Basis 10):</label>
-            <input type="number" id="decimal-input" step="any" placeholder="Geben Sie eine Dezimalzahl ein" value="42.375">
+            <input type="number" id="decimal-input" step="any" placeholder="Geben Sie eine Dezimalzahl ein"
+                value="42.375">
         </div>
-        
+
         <div class="input-group">
             <label for="basis-slider">Basis für die Umrechnung:</label>
             <div class="slider-container">
-                <input type="range" id="basis-slider" min="1.5" max="36" step="any" value="16">
+                <input type="range" id="basis-slider" min="-36" max="36" step="any" value="16">
                 <span id="basis-value" class="basis-value">16</span>
             </div>
         </div>
-        
+
         <div class="input-group">
             <label for="basis-input">Basis direkt eingeben:</label>
-            <input type="number" id="basis-input" step="any" min="1.5" max="36" value="16">
+            <input type="number" id="basis-input" step="any" min="-36" max="36" value="16">
         </div>
-        
+
         <div class="result" id="result-container">
             <div id="result">Die Zahl 42 in Basis 16 ist: 2A</div>
             <div id="steps" class="calculation-steps"></div>
         </div>
-        
+
         <div class="explanation">
             <h3>Wie funktioniert die Umrechnung?</h3>
-            <p>Bei der Umrechnung von einer Dezimalzahl in ein Zahlensystem mit anderer Basis wird folgendes Verfahren angewendet:</p>
+            <p>Bei der Umrechnung von einer Dezimalzahl in ein Zahlensystem mit anderer Basis wird folgendes
+                Verfahren angewendet:</p>
             <ul>
-                <li>Der ganzzahlige Teil wird durch wiederholtes Dividieren durch die Basis und Sammeln der Reste umgerechnet.</li>
-                <li>Der Nachkommateil wird durch wiederholtes Multiplizieren mit der Basis und Extrahieren der ganzzahligen Anteile umgerechnet.</li>
+                <li>Der ganzzahlige Teil wird durch wiederholtes Dividieren durch die Basis und Sammeln der Reste
+                    umgerechnet.</li>
+                <li>Der Nachkommateil wird durch wiederholtes Multiplizieren mit der Basis und Extrahieren der
+                    ganzzahligen Anteile umgerechnet.</li>
             </ul>
-            <p>Bei rationalen Basen (z.B. 2,5) wird eine Potenzdarstellung verwendet, wobei jede Position einer Potenz der Basis entspricht.</p>
-            
+            <p>Bei rationalen Basen (z.B. 2,5) wird eine Potenzdarstellung verwendet, wobei jede Position einer
+                Potenz der Basis entspricht.</p>
+
             <h4>Beispiel mit Nachkommastellen:</h4>
             <p>Für die Zahl 42,375 in Basis 4,1:</p>
             <ol>
@@ -146,14 +170,26 @@
                 </li>
             </ol>
             <p>Ergebnis: 42,375 (Basis 10) = 220,120 (Basis 4,1)</p>
+
+            <h4>Negative Basen:</h4>
+            <p>Bei negativen Basen (z.B. -2, -10) haben aufeinanderfolgende Stellen abwechselnd positive und negative
+                Werte. Das ermöglicht, alle Zahlen ohne Vorzeichen darzustellen.</p>
+            <p>Beispiel: 42 in Basis -10 wird zu 162, da:</p>
+            <ul>
+                <li>1 × (-10)² = 100</li>
+                <li>6 × (-10)¹ = -60</li>
+                <li>2 × (-10)⁰ = 2</li>
+                <li>100 + (-60) + 2 = 42</li>
+            </ul>
         </div>
     </div>
 
     <script>
         // Konstanten für die Berechnung
-        const MAX_FRACTIONAL_DIGITS = 10;  // Maximale Anzahl von Nachkommastellen
-        const PRECISION = 1e-10;           // Präzision für Rundungsfehler
-        
+        const MAX_FRACTIONAL_DIGITS = 20; // Erhöhte maximale Anzahl von Nachkommastellen
+        const PRECISION = 1e-15; // Erhöhte Präzision für Rundungsfehler
+        const MAX_ITERATIONS = 1000; // Maximale Iterationen für Berechnungen
+
         // DOM-Elemente
         const decimalInput = document.getElementById('decimal-input');
         const basisSlider = document.getElementById('basis-slider');
@@ -161,235 +197,423 @@
         const basisInput = document.getElementById('basis-input');
         const resultElement = document.getElementById('result');
         const stepsElement = document.getElementById('steps');
-        
+
         // Zeichen für Ziffern über 9
         const DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        
+
         // Event-Listener
-        basisSlider.addEventListener('input', function() {
+        basisSlider.addEventListener('input', function () {
             updateBasisFromSlider();
             performConversion();
         });
-        basisInput.addEventListener('input', function() {
+        basisInput.addEventListener('input', function () {
             updateSliderFromInput();
             performConversion();
         });
         decimalInput.addEventListener('input', performConversion);
-        
+
         // Hilfsfunktion zur Potenzierung mit rationalen Exponenten
         function pow(base, exponent) {
-            return Math.exp(exponent * Math.log(base));
+            return Math.pow(base, exponent);
         }
-        
+
         // Aktualisiert die Anzeige und den Eingabewert aus dem Slider
         function updateBasisFromSlider() {
             const basis = parseFloat(basisSlider.value);
             basisValue.textContent = basis.toFixed(3).replace(/\.?0+$/, '');
             basisInput.value = basis;
         }
-        
+
         // Aktualisiert den Slider und die Anzeige aus dem direkten Eingabefeld
         function updateSliderFromInput() {
             let basis = parseFloat(basisInput.value.replace(',', '.'));
-            
+
             // Begrenzung auf gültigen Bereich
-            if (isNaN(basis) || basis < 1.5) basis = 1.5;
+            if (isNaN(basis) || basis > -1.5 && basis < 1.5) basis = 2;
             if (basis > 36) basis = 36;
-            
+            if (basis < -36) basis = -36;
+
             basisSlider.value = basis;
             basisValue.textContent = basis.toFixed(3).replace(/\.?0+$/, '');
         }
-        
+
         // Führt die Konversion durch
         function performConversion() {
             const decimalValue = parseFloat(decimalInput.value.replace(',', '.'));
             const basis = parseFloat(basisInput.value.replace(',', '.'));
-            
+
             // Überprüfen auf gültige Eingabe
             if (isNaN(decimalValue) || isNaN(basis)) {
                 resultElement.innerHTML = `<span class="error">Bitte geben Sie gültige Zahlen ein.</span>`;
                 stepsElement.innerHTML = "";
                 return;
             }
-            
+
             // Verarbeiten von negativen Zahlen
             const isNegative = decimalValue < 0;
             const absoluteValue = Math.abs(decimalValue);
-            
+
             // Konversion durchführen
-            const conversionResult = convertToBase(absoluteValue, basis);
-            const resultString = (isNegative ? "-" : "") + conversionResult.result;
-            
+            const conversionResult = convertToBase(decimalValue, basis);
+            let resultString = (isNegative && basis > 0 ? "-" : "") + conversionResult.result;
+            if (basis < 0) {
+                resultString = conversionResult.result;
+            }
+
             // Ergebnis anzeigen mit vollständiger Basis-Präzision
             const basisDisplay = basis.toString().replace(/\.?0+$/, '').replace('.', ',');
-            resultElement.textContent = `Die Zahl ${decimalValue} in Basis ${basisDisplay} ist: ${resultString}`;
+            resultElement.innerHTML = `Die Zahl ${decimalValue} in Basis ${basisDisplay} ist: ${resultString}`;
             stepsElement.innerHTML = conversionResult.steps;
         }
-        
+
         // Konvertiert eine Dezimalzahl in das angegebene Zahlensystem
         function convertToBase(decimalValue, basis) {
-            // Spezialfall: wenn die Basis eine ganze Zahl ist
-            if (Math.abs(basis - Math.round(basis)) < PRECISION) {
-                return convertToIntegerBase(decimalValue, Math.round(basis));
+            // Absicherung gegen zu große Zahlen
+            if (Math.abs(decimalValue) > 1e15) {
+                return {
+                    result: "Zu groß",
+                    steps: "<h4>Wert zu groß</h4><p>Der eingegebene Wert ist zu groß für die Berechnung. Bitte verwenden Sie einen kleineren Wert.</p>"
+                };
             }
-            
-            // Für rationale Basen
-            return convertToRationalBase(decimalValue, basis);
+
+            // Prüfen auf ungültige Basis um 0
+            if (Math.abs(basis) < 1.5) {
+                return {
+                    result: "Ungültig",
+                    steps: "<h4>Ungültige Basis</h4><p>Die Basis muss einen Absolutwert größer oder gleich 1,5 haben.</p>"
+                };
+            }
+
+            try {
+                // Negative Basis
+                if (basis < 0) {
+                    return convertToNegativeBase(decimalValue, basis);
+                }
+
+                // Spezialfall: wenn die Basis eine ganze Zahl ist
+                if (Math.abs(basis - Math.round(basis)) < PRECISION) {
+                    return convertToIntegerBase(decimalValue, Math.round(basis));
+                }
+
+                // Für rationale Basen
+                return convertToRationalBase(decimalValue, basis);
+            } catch (error) {
+                console.error("Fehler bei der Konvertierung:", error);
+                return {
+                    result: "Fehler",
+                    steps: `<h4>Fehler bei der Berechnung</h4><p>Es ist ein Fehler aufgetreten: ${error.message}</p><p>Bitte versuchen Sie es mit anderen Werten.</p>`
+                };
+            }
         }
-        
+
+        // Konvertiert eine Dezimalzahl in ein Zahlensystem mit negativer Basis
+        function convertToNegativeBase(decimalValue, basis) {
+            let steps = `<h4>Umrechnung mit negativer Basis ${basis}:</h4>`;
+
+            // Spezialfall: Null
+            if (decimalValue === 0) {
+                return {
+                    result: "0",
+                    steps: steps + "<p>Da der Wert 0 ist, ist das Ergebnis einfach 0.</p>"
+                };
+            }
+
+            // Bei negativen Basen müssen wir einen speziellen Algorithmus verwenden
+            steps += "<p>Bei negativen Basen haben aufeinanderfolgende Positionen abwechselnd positive und negative Gewichte.</p>";
+
+            // Implementierung des korrekten Algorithmus für negative Basen
+            let intResult = "";
+            let fractResult = "";
+
+            // Aufteilen in ganzzahligen Teil und Nachkommateil
+            let integerPart = Math.floor(Math.abs(decimalValue));
+            let fractionalPart = Math.abs(decimalValue) - integerPart;
+
+            // Für ganzzahlige negative Basen
+            const intBase = basis;
+
+            // Ganzzahliger Teil
+            steps += "<p><strong>Ganzzahliger Teil:</strong></p>";
+            steps += "<table>";
+            steps += "<tr><th>Wert</th><th>Division</th><th>Quotient</th><th>Rest</th></tr>";
+
+            let value = integerPart;
+            let resultDigits = [];
+            let iterations = 0;
+
+            while (value !== 0 && iterations < MAX_ITERATIONS) {
+                let remainder = value % intBase;
+                let quotient = Math.ceil(value / intBase); // Wichtig: ceil verwenden
+
+                if (remainder < 0) {
+                    remainder += Math.abs(intBase);
+                    quotient = Math.ceil(value / intBase);
+                }
+
+                if (remainder >= DIGITS.length) {
+                    remainder = DIGITS.length - 1;
+                }
+                steps += `<tr><td>${value}</td><td>${value} ÷ ${intBase.toFixed(15)}</td><td>${quotient}</td><td>${remainder.toFixed(15)} → ${DIGITS.charAt(remainder)}</td></tr>`;
+
+                resultDigits.unshift(DIGITS.charAt(remainder));
+                value = quotient;
+                iterations++;
+            }
+
+            steps += "</table>";
+
+            if (iterations >= MAX_ITERATIONS) {
+                steps += "<p class='error'>Warnung: Maximale Iterationen erreicht. Das Ergebnis könnte unvollständig sein.</p>";
+            }
+            intResult = resultDigits.join('');
+
+            // Nachkommateil
+            if (fractionalPart > 0) {
+                fractResult = ".";
+                steps += "<p><strong>Nachkommateil:</strong></p>";
+                steps += "<table>";
+                steps += "<tr><th>Wert</th><th>Multiplikation</th><th>Ganzzahliger Teil</th><th>Nachkommateil</th></tr>";
+
+                let currentFraction = fractionalPart;
+                const maxDigits = 20;
+                let fractionalDigits = [];
+
+                for (let i = 0; i < maxDigits && currentFraction > PRECISION; i++) {
+                    currentFraction *= -intBase;
+                    const digit = Math.floor(currentFraction);
+                    steps += `<tr><td>${currentFraction.toFixed(15)}</td><td>${currentFraction.toFixed(15)} × ${(-intBase).toFixed(15)}</td><td>${digit} → ${DIGITS.charAt(Math.abs(digit))}</td><td>${(currentFraction - digit).toFixed(15)}</td></tr>`;
+
+                    let adjustedDigit = Math.abs(digit);
+                    if (adjustedDigit >= DIGITS.length) {
+                        adjustedDigit = DIGITS.length - 1;
+                    }
+
+                    fractionalDigits.push(DIGITS.charAt(adjustedDigit));
+                    currentFraction -= digit;
+                }
+                steps += "</table>";
+                fractResult = "." + fractionalDigits.join("");
+            }
+
+            let finalResult = (intResult === "" ? "0" : intResult) + fractResult;
+            const sign = decimalValue < 0 ? "-" : "";
+
+            // Veranschaulichung der Stellenwertberechnung
+            steps += "<p><strong>Stellenwertberechnung:</strong></p>";
+            steps += "<ul>";
+            let totalValue = 0;
+            const combinedResult = finalResult;
+            for (let i = 0; i < combinedResult.length; i++) {
+                const position = intResult.length - 1 - i;
+                const digitValue = parseInt(combinedResult[i], 36);
+                const weight = pow(intBase, position);
+                const contribution = digitValue * weight;
+                totalValue += contribution;
+                steps += `<li>${digitValue} × (${intBase.toFixed(15)})^${position} = ${contribution.toFixed(4)}</li>`;
+            }
+            steps += "</ul>";
+            steps += `<p>Summe der Stellenwerte: ${totalValue.toFixed(4)}</p>`;
+
+            // Korrektur des Vorzeichens für negative Basen
+            if (decimalValue < 0 && basis < 0) {
+                 if (intResult.length % 2 !== 0) {
+                    finalResult =  finalResult.substring(1);
+                 }
+                 return { result: finalResult, steps: steps };
+            }
+            else if (decimalValue < 0 && basis > 0)
+                return { result: sign + finalResult, steps: steps };
+            else
+                return { result: finalResult, steps: steps };
+        }
+
         // Konvertiert eine Dezimalzahl in ein Zahlensystem mit ganzzahliger Basis
         function convertToIntegerBase(decimalValue, basis) {
             let steps = "<h4>Umrechnungsschritte:</h4>";
             let result = "";
-            
+            const sign = decimalValue < 0 ? "-" : "";
+
             // Teilen in ganzzahligen Teil und Nachkommateil
-            let integerPart = Math.floor(decimalValue);
-            let fractionalPart = decimalValue - integerPart;
-            
+            let integerPart = Math.floor(Math.abs(decimalValue));
+            let fractionalPart = Math.abs(decimalValue) - integerPart;
+
             // Konvertieren des ganzzahligen Teils
             if (integerPart === 0) {
                 result = "0";
             } else {
                 steps += "<p><strong>Ganzzahliger Teil:</strong></p>";
                 const integerConversion = [];
-                
+
                 steps += "<table>";
                 steps += "<tr><th>Division</th><th>Quotient</th><th>Rest</th></tr>";
-                
-                while (integerPart > 0) {
-                    const remainder = integerPart % basis;
-                    steps += `<tr><td>${integerPart} ÷ ${basis}</td><td>${Math.floor(integerPart / basis)}</td><td>${remainder} → ${DIGITS.charAt(remainder)}</td></tr>`;
-                    integerConversion.unshift(DIGITS.charAt(remainder));
+
+                let iterations = 0;
+                while (integerPart > 0 && iterations < MAX_ITERATIONS) {
+                    let remainder = integerPart % basis;
+                    if (remainder >= DIGITS.length) {
+                        remainder = DIGITS.length - 1;
+                    }
+
+                    try {
+                        steps += `<tr><td>${integerPart} ÷ ${basis}</td><td>${Math.floor(integerPart / basis)}</td><td>${remainder} → ${DIGITS.charAt(remainder)}</td></tr>`;
+                        integerConversion.unshift(DIGITS.charAt(remainder));
+                    } catch (e) {
+                        steps += `<tr><td>${integerPart} ÷ ${basis}</td><td>${Math.floor(integerPart / basis)}</td><td>Fehler</td></tr>`;
+                        integerConversion.unshift("?");
+                    }
+
                     integerPart = Math.floor(integerPart / basis);
+                    iterations++;
                 }
-                
-                steps += "</table>";
+
+                if (iterations >= MAX_ITERATIONS) {
+                    steps += "</table><p class='error'>Warnung: Maximale Iterationen erreicht. Das Ergebnis könnte unvollständig sein.</p>";
+                } else {
+                    steps += "</table>";
+                }
+
                 result = integerConversion.join('');
             }
-            
+
             // Konvertieren des Nachkommateils
             if (fractionalPart > 0) {
                 result += ".";
                 steps += "<p><strong>Nachkommateil:</strong></p>";
-                
+
                 steps += "<table>";
                 steps += "<tr><th>Multiplikation</th><th>Ganzzahliger Teil</th><th>Nachkommateil</th></tr>";
-                
+
                 let fractionalResult = "";
-                let fractionValues = new Map(); // Um Wiederholungen zu erkennen
+                let fractionValues = new Map();
                 let position = 0;
-                
+
                 while (fractionalPart > PRECISION && fractionalResult.length < MAX_FRACTIONAL_DIGITS) {
-                    // Überprüfen auf Wiederholungen
-                    if (fractionValues.has(fractionalPart)) {
-                        const repeatStart = fractionValues.get(fractionalPart);
+                    const roundedFractionalPart = Math.round(fractionalPart * 1e15) / 1e15;
+                    if (fractionValues.has(roundedFractionalPart)) {
+                        const repeatStart = fractionValues.get(roundedFractionalPart);
                         const nonRepeating = fractionalResult.substring(0, repeatStart);
                         const repeating = fractionalResult.substring(repeatStart);
                         fractionalResult = nonRepeating + "(" + repeating + ")";
                         break;
                     }
-                    
-                    fractionValues.set(fractionalPart, position);
-                    
+
+                    fractionValues.set(roundedFractionalPart, position);
+
                     const product = fractionalPart * basis;
                     const digit = Math.floor(product);
-                    steps += `<tr><td>${fractionalPart} × ${basis} = ${product.toFixed(10)}</td><td>${digit} → ${DIGITS.charAt(digit)}</td><td>${(product - digit).toFixed(10)}</td></tr>`;
-                    
-                    fractionalResult += DIGITS.charAt(digit);
+
+                    try {
+                        steps += `<tr><td>${fractionalPart.toFixed(15)} × ${basis} = ${product.toFixed(15)}</td><td>${digit} → ${DIGITS.charAt(digit)}</td><td>${(product - digit).toFixed(15)}</td></tr>`;
+                        fractionalResult += DIGITS.charAt(digit);
+                    } catch (e) {
+                        steps += `<tr><td>${fractionalPart.toFixed(15)} × ${basis} = ${product.toFixed(15)}</td><td>${digit} → Fehler</td><td>${(product - digit).toFixed(15)}</td></tr>`;
+                        fractionalResult += "?";
+                    }
+
                     fractionalPart = product - digit;
                     position++;
                 }
-                
-                steps += "</table>";
+
+                if (fractionalResult.length >= MAX_FRACTIONAL_DIGITS) {
+                    steps += "</table><p class='error'>Die Nachkommadarstellung wurde nach " + MAX_FRACTIONAL_DIGITS + " Stellen abgeschnitten.</p>";
+                } else {
+                    steps += "</table>";
+                }
+
                 result += fractionalResult;
             }
-            
             return {
-                result: result,
+                result: sign + result,
                 steps: steps
             };
         }
-        
+
         // Konvertiert eine Dezimalzahl in ein Zahlensystem mit rationaler Basis
         function convertToRationalBase(decimalValue, basis) {
-            // Behandlung von 0
             if (decimalValue === 0) {
                 return {
                     result: "0",
                     steps: `<h4>Umrechnung mit rationaler Basis ${basis}:</h4><p>Da der Wert 0 ist, ist das Ergebnis einfach 0.</p>`
                 };
             }
-            
+
             let steps = `<h4>Umrechnung mit rationaler Basis ${basis}:</h4>`;
             steps += "<p>Bei rationalen Basen verwenden wir eine Potenzdarstellung.</p>";
-            
+
             let result = "";
-            let integerPart = Math.floor(decimalValue);
-            let fractionalPart = decimalValue - integerPart;
-            
+            const sign = decimalValue < 0 ? "-" : "";
+            let integerPart = Math.floor(Math.abs(decimalValue));
+            let fractionalPart = Math.abs(decimalValue) - integerPart;
+
             // Konvertieren des ganzzahligen Teils
             steps += "<p><strong>Ganzzahliger Teil:</strong></p>";
-            
-            // Sonderfall: Wenn integerPart = 0
+
             if (integerPart === 0) {
                 result = "0";
                 steps += "<p>Da der ganzzahlige Teil 0 ist, setzen wir 0.</p>";
             } else {
                 steps += "<table>";
                 steps += "<tr><th>Position</th><th>Berechnung</th><th>Ziffer</th></tr>";
-                
-                // Finden der höchsten Potenz der Basis, die nicht größer als die Zahl ist
+
                 let maxPower = 0;
                 while (pow(basis, maxPower + 1) <= integerPart) {
                     maxPower++;
                 }
-                
-                // Von der höchsten zur niedrigsten Potenz
+
                 let remainingValue = integerPart;
-                
-                for (let power = maxPower; power >= 0; power--) {
+
+                let iterations = 0;
+                for (let power = maxPower; power >= 0 && iterations < MAX_ITERATIONS; power--) {
                     const weightedValue = pow(basis, power);
                     const digit = Math.floor(remainingValue / weightedValue);
-                    
-                    steps += `<tr><td>${power}</td><td>${remainingValue.toFixed(4)} ÷ ${basis}^${power} (${weightedValue.toFixed(4)}) = ${digit}</td><td>${DIGITS.charAt(digit)}</td></tr>`;
-                    
+
+                    steps += `<tr><td>${power}</td><td>${remainingValue.toFixed(15)} ÷ ${basis}^${power} (${weightedValue.toFixed(15)}) = ${digit}</td><td>${DIGITS.charAt(digit)}</td></tr>`;
+
                     result += DIGITS.charAt(digit);
                     remainingValue -= digit * weightedValue;
+                    iterations++;
                 }
-                
-                steps += "</table>";
+                if (iterations >= MAX_ITERATIONS)
+                    steps += "</table><p class='error'>Warnung: Maximale Iterationen erreicht. Das Ergebnis könnte unvollständig sein.</p>";
+                else
+                    steps += "</table>";
             }
-            
+
             // Konvertieren des Nachkommateils
             if (fractionalPart > 0) {
                 result += ".";
                 steps += "<p><strong>Nachkommateil:</strong></p>";
                 steps += "<table>";
                 steps += "<tr><th>Position</th><th>Berechnung</th><th>Ziffer</th></tr>";
-                
+
                 let currentFraction = fractionalPart;
-                for (let i = 1; i <= MAX_FRACTIONAL_DIGITS && currentFraction > PRECISION; i++) {
+                let iterations = 0;
+                for (let i = 1; i <= MAX_FRACTIONAL_DIGITS && currentFraction > PRECISION && iterations < MAX_ITERATIONS; i++) {
                     const weightedValue = pow(basis, -i);
                     const digit = Math.floor(currentFraction / weightedValue);
-                    
-                    steps += `<tr><td>-${i}</td><td>${currentFraction.toFixed(10)} ÷ ${basis}^-${i} (${weightedValue.toFixed(10)}) = ${digit}</td><td>${DIGITS.charAt(digit)}</td></tr>`;
-                    
+
+                    steps += `<tr><td>-${i}</td><td>${currentFraction.toFixed(15)} ÷ ${basis}^-${i} (${weightedValue.toFixed(15)}) = ${digit}</td><td>${DIGITS.charAt(digit)}</td></tr>`;
+
                     result += DIGITS.charAt(digit);
                     currentFraction -= digit * weightedValue;
+                    iterations++;
                 }
-                
-                steps += "</table>";
-            }
-            
+                if (iterations >= MAX_ITERATIONS)
+                    steps += "</table><p class='error'>Warnung: Maximale Iterationen erreicht.Das Ergebnis könnte unvollständig sein.</p>";
+                else
+                    steps += "</table>";
+}
+
             return {
-                result: result,
+                result: sign + result,
                 steps: steps
             };
         }
-        
+
         // Initialisieren
         updateBasisFromSlider();
         performConversion();
     </script>
 </body>
+
 </html>
